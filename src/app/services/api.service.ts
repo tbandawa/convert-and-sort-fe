@@ -14,7 +14,7 @@ export class ApiService {
 
   convertWord(data: Data): Observable<Word> {
     return this.httpClient
-      .post<any>('http://localhost:3000/api/convert', data)
+      .post<any>('https://convert-and-sort-be.vercel.app/api/convert', data)
       .pipe(map(resp => this.wordAdapter.adapt(resp)))
   }
 }
