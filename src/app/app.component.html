@@ -8,14 +8,17 @@
       <!--Data input-->
       <form [formGroup]="convertForm" (ngSubmit)="onConvert()">
         <div class="row">
-          <div class="col-8 flex-grow-1">
+          <div class="col flex-grow-1">
             <input type="text" [formControl]="data" class="form-control" placeholder="Enter word" required>
             <div [hidden]="data.valid || data.untouched">
               <div [hidden]="!data.hasError('required')" class="text-danger">Input data required.</div>
             </div>
           </div>
-          <div class="col-2">
-            <button type="submit" class="btn btn-primary btn-block" [disabled]="!convertForm.valid">Convert</button>
+          <div class="col">
+            <button type="submit" class="btn btn-primary btn-block" [disabled]="!convertForm.valid || isLoading">
+              <span *ngIf="!isLoading">Convert</span>
+              <span *ngIf="isLoading">Converting...</span>
+            </button>
           </div>
         </div>
       </form>

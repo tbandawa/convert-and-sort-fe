@@ -15,6 +15,7 @@ export class AppComponent {
   title = 'Convert & Sort'
 
   word: string[] = []
+  isLoading: boolean = false
   errorResponse: ErrorResponse | null = null
 
   data = new FormControl('', [Validators.required])
@@ -30,16 +31,19 @@ export class AppComponent {
   ) { }
 
   onConvert() {
+    this.isLoading = true
     let data: Data = { data: <string>this.data.value}
     this.apiService.convertWord(data).subscribe({
       next: data => {
         this.word = data.word
         this.errorResponse = null
+        this.isLoading = false
       },
       error: error => {
         this.errorResponse = {
           message: error.message
         }
+        this.isLoading = false
       }
     })
   }
