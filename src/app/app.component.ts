@@ -2,7 +2,7 @@ import { Component } from '@angular/core'
 import { ApiService } from './services/api.service'
 import { Errors } from './models/errors'
 import { Data } from './models/data'
-import { ErrorResponse, Word } from './models/word'
+import { ErrorResponse } from './models/word'
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 
 @Component({
@@ -15,7 +15,7 @@ export class AppComponent {
   title = 'Convert & Sort'
 
   word: string[] = []
-  errorResponse!: ErrorResponse
+  errorResponse: ErrorResponse | null = null
 
   data = new FormControl('', [Validators.required])
 
@@ -34,9 +34,12 @@ export class AppComponent {
     this.apiService.convertWord(data).subscribe({
       next: data => {
         this.word = data.word
+        this.errorResponse = null
       },
       error: error => {
-        console.log(error)
+        this.errorResponse = {
+          message: error.message
+        }
       }
     })
   }

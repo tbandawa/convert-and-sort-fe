@@ -1,9 +1,14 @@
 <div class="back">
   <div class="div-center">
     <div class="content">
+      <!--Error -->
+      <div *ngIf="errorResponse" class="alert alert-danger" role="alert">
+        {{ errorResponse.message }}
+      </div>
+      <!--Data input-->
       <form [formGroup]="convertForm" (ngSubmit)="onConvert()">
         <div class="row">
-          <div class="col flex-grow-1">
+          <div class="col-8 flex-grow-1">
             <input type="text" [formControl]="data" class="form-control" placeholder="Enter word" required>
             <div [hidden]="data.valid || data.untouched">
               <div [hidden]="!data.hasError('required')" class="text-danger">Input data required.</div>
@@ -14,7 +19,8 @@
           </div>
         </div>
       </form>
-      <div class="card mt-4" *ngIf="word.length > 0">
+      <!--Word output-->
+      <div *ngIf="word.length > 0" class="card mt-4">
         <div class="card-body">
           <h5 class="card-title">
             <span *ngFor="let char of word">
@@ -23,5 +29,4 @@
           </h5>
         </div>
       </div>
-
     </div>
